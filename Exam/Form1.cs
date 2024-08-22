@@ -39,8 +39,24 @@ namespace Exam
         }
 
         private void btnDell_Click(object sender, EventArgs e)
-        {
+        {            
+            for(int i = listBox2.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                listBox2.Items.Remove(listBox2.SelectedItems[i]);
+            }
+        }
 
+        private void btnDellAll_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Clear();
+        }
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < listBox1.SelectedItems.Count; i++)
+            {
+                listBox2.Items.Add(listBox1.SelectedItems[i]);
+            }
         }
     }
 }

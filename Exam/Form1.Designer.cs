@@ -47,8 +47,10 @@
             listBox1.ItemHeight = 15;
             listBox1.Location = new Point(31, 77);
             listBox1.Name = "listBox1";
+            listBox1.SelectionMode = SelectionMode.MultiSimple;
             listBox1.Size = new Size(142, 349);
             listBox1.TabIndex = 0;
+            listBox1.MouseDoubleClick += listBox1_MouseDoubleClick;
             // 
             // listBox2
             // 
@@ -56,6 +58,7 @@
             listBox2.ItemHeight = 15;
             listBox2.Location = new Point(370, 77);
             listBox2.Name = "listBox2";
+            listBox2.SelectionMode = SelectionMode.MultiSimple;
             listBox2.Size = new Size(137, 349);
             listBox2.TabIndex = 1;
             // 
@@ -128,6 +131,7 @@
             btnDellAll.TabIndex = 7;
             btnDellAll.Text = "Очистить список";
             btnDellAll.UseVisualStyleBackColor = true;
+            btnDellAll.Click += btnDellAll_Click;
             // 
             // Form1
             // 
