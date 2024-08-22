@@ -30,12 +30,10 @@ namespace Exam
                 }
             }
         }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            Dictionary<string, ListItem> itemDict = new Dictionary<string, ListItem>();            
+            Dictionary<string, ListItem> itemDict = new Dictionary<string, ListItem>();
 
-            // Пройтись по элементам целевого ListBox и заполнить словарь
             foreach (var item in listBox2.Items)
             {
                 if (item is ListItem listItem)
@@ -44,109 +42,100 @@ namespace Exam
                 }
             }
 
-            // Пройтись по исходному ListBox и добавлять элементы в словарь
             foreach (var selectedItem in listBox1.SelectedItems)
             {
                 string itemName = selectedItem.ToString();
 
-                if (itemDict.ContainsKey(itemName))
+                string[] parts = itemName.Split(' ');
+                if (parts.Length >= 2 && int.TryParse(parts.Last(), out int cost))
                 {
-                    // Увеличиваем количество, если элемент уже есть в словаре
-                    itemDict[itemName].Count++;
-                }
-                else
-                {
-                    // Добавляем новый элемент в словарь
-                    itemDict[itemName] = new ListItem { Name = itemName, Count = 1 };
+                    string name = string.Join(" ", parts.Take(parts.Length - 1)); // Имя без стоимости
+
+                    if (itemDict.ContainsKey(name))
+                    {
+                        // Увеличиваем количество, если элемент уже есть в словаре
+                        itemDict[name].Count++;
+                        itemDict[name].Cost += cost; // Увеличиваем общую стоимость
+                    }
+                    else
+                    {
+                        // Добавляем новый элемент в словарь
+                        itemDict[name] = new ListItem { Name = name, Count = 1, Cost = cost };
+                    }
                 }
             }
-
-
-            // Очистить целевой ListBox и заполнить его обновлёнными элементами из словаря
+            //Очищаем список и заполняем заново
             listBox2.Items.Clear();
             foreach (var listItem in itemDict.Values)
             {
                 listBox2.Items.Add(listItem);
             }
-            //for (int i = 0; i < listBox1.SelectedItems.Count; i++)
-            //{
-            //    listBox2.Items.Add(listBox1.SelectedItems[i]);
-            //}
+
             if (listBox2 == null)
                 throw new ArgumentNullException(nameof(listBox2));
+
             int sum = 0;
-
-            foreach (var item in listBox2.Items)
-            {
-                string[] parts = item.ToString().Split(' ');
-
-                if (parts.Length >= 2 && int.TryParse(parts.Last(), out int number))
-                {
-                    sum += number;
-                }
-            }
-
-            textBox1.Text = sum.ToString();
-        }
-
-        private void btnDell_Click(object sender, EventArgs e)
-        {
-            Dictionary<string, ListItem> itemDict = new Dictionary<string, ListItem>();
+            //Считаем общую сумму
             foreach (var item in listBox2.Items)
             {
                 if (item is ListItem listItem)
                 {
-                    itemDict[listItem.Name] = listItem;
+                    sum += listItem.Cost;
                 }
             }
+            // Обновить текстовое поле суммой
+            textBox1.Text = sum.ToString();            
+        }
 
-            // Пройтись по выделенным элементам целевого ListBox и уменьшить количество или удалить элемент
-            foreach (var selectedItem in listBox2.SelectedItems.Cast<ListItem>().ToList())
+        private void btnDell_Click(object sender, EventArgs e)
+        {
+            if (listBox2.SelectedItem != null && listBox2.SelectedItem is ListItem selectedItem)
             {
                 string itemName = selectedItem.Name;
 
+                Dictionary<string, ListItem> itemDict = new Dictionary<string, ListItem>();
+
+                foreach (var item in listBox2.Items)
+                {
+                    if (item is ListItem listItem)
+                    {
+                        itemDict[listItem.Name] = listItem;
+                    }
+                }
+
                 if (itemDict.ContainsKey(itemName))
                 {
+                    int costPerItem = selectedItem.Cost / selectedItem.Count; 
+
                     if (itemDict[itemName].Count > 1)
-                    {
-                        // Уменьшаем количество
+                    {                        
                         itemDict[itemName].Count--;
+                        itemDict[itemName].Cost -= costPerItem; 
                     }
                     else
-                    {
-                        // Удаляем элемент из словаря
+                    {                        
                         itemDict.Remove(itemName);
                     }
+
+                    listBox2.Items.Clear();
+                    foreach (var listItem in itemDict.Values)
+                    {
+                        listBox2.Items.Add(listItem);
+                    }
+
+                    int sum = 0;
+                    foreach (var item in listBox2.Items)
+                    {
+                        if (item is ListItem listItem)
+                        {
+                            sum += listItem.Cost;
+                        }
+                    }
+
+                    textBox1.Text = sum.ToString();
                 }
             }
-
-            // Очистить целевой ListBox и заполнить его обновлёнными элементами из словаря
-            listBox2.Items.Clear();
-            foreach (var listItem in itemDict.Values)
-            {
-                listBox2.Items.Add(listItem);
-            }
-            //for (int i = listBox2.SelectedItems.Count - 1; i >= 0; i--)
-            //{
-            //    listBox2.Items.Remove(listBox2.SelectedItems[i]);
-            //}
-            if (listBox2 == null)
-                throw new ArgumentNullException(nameof(listBox2));
-            int sum = 0;
-
-            foreach (var item in listBox2.Items)
-            {
-                string[] parts = item.ToString().Split(' ');
-
-                if (parts.Length >= 2 && int.TryParse(parts.Last(), out int number))
-                {
-                    sum += number;
-                }
-            }
-
-            textBox1.Text = sum.ToString();
         }
-
         private void btnDellAll_Click(object sender, EventArgs e)
         {
             listBox2.Items.Clear();
@@ -169,44 +158,56 @@ namespace Exam
 
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            for (int i = 0; i < listBox1.SelectedItems.Count; i++)
-            {
-                listBox2.Items.Add(listBox1.SelectedItems[i]);
-            }
-            if (listBox2 == null)
-                throw new ArgumentNullException(nameof(listBox2));
-            int sum = 0;
+            Dictionary<string, ListItem> itemDict = new Dictionary<string, ListItem>();
 
             foreach (var item in listBox2.Items)
             {
-                string[] parts = item.ToString().Split(' ');
-
-                if (parts.Length >= 2 && int.TryParse(parts.Last(), out int number))
+                if (item is ListItem listItem)
                 {
-                    sum += number;
+                    itemDict[listItem.Name] = listItem;
                 }
             }
 
+            foreach (var selectedItem in listBox1.SelectedItems)
+            {
+                string itemName = selectedItem.ToString();
+
+                string[] parts = itemName.Split(' ');
+                if (parts.Length >= 2 && int.TryParse(parts.Last(), out int cost))
+                {
+                    string name = string.Join(" ", parts.Take(parts.Length - 1)); 
+
+                    if (itemDict.ContainsKey(name))
+                    {                        
+                        itemDict[name].Count++;
+                        itemDict[name].Cost += cost; 
+                    }
+                    else
+                    {
+                        itemDict[name] = new ListItem { Name = name, Count = 1, Cost = cost };
+                    }
+                }
+            }
+
+            listBox2.Items.Clear();
+            foreach (var listItem in itemDict.Values)
+            {
+                listBox2.Items.Add(listItem);
+            }
+
+            if (listBox2 == null)
+                throw new ArgumentNullException(nameof(listBox2));
+
+            int sum = 0;
+                        
+            foreach (var item in listBox2.Items)
+            {
+                if (item is ListItem listItem)
+                {
+                    sum += listItem.Cost;
+                }
+            }           
             textBox1.Text = sum.ToString();
-        }
-
-        //private void btnSumm_Click(object sender, EventArgs e)
-        //{
-        //    if (listBox2 == null)
-        //        throw new ArgumentNullException(nameof(listBox2));
-        //    int sum = 0;
-
-        //    foreach (var item in listBox2.Items)
-        //    {               
-        //        string[] parts = item.ToString().Split(' ');
-                
-        //        if (parts.Length >= 2 && int.TryParse(parts.Last(), out int number))
-        //        {
-        //            sum += number;
-        //        }
-        //    }
-
-        //    textBox1.Text = sum.ToString();
-        //}
+        }       
     }
 }
