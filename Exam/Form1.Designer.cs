@@ -38,6 +38,9 @@
             btnAdd = new Button();
             btnDell = new Button();
             btnDellAll = new Button();
+            textBox1 = new TextBox();
+            label3 = new Label();
+            btnSumm = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -47,7 +50,7 @@
             listBox1.ItemHeight = 15;
             listBox1.Location = new Point(31, 77);
             listBox1.Name = "listBox1";
-            listBox1.SelectionMode = SelectionMode.MultiSimple;
+            listBox1.SelectionMode = SelectionMode.MultiExtended;
             listBox1.Size = new Size(142, 349);
             listBox1.TabIndex = 0;
             listBox1.MouseDoubleClick += listBox1_MouseDoubleClick;
@@ -58,7 +61,7 @@
             listBox2.ItemHeight = 15;
             listBox2.Location = new Point(370, 77);
             listBox2.Name = "listBox2";
-            listBox2.SelectionMode = SelectionMode.MultiSimple;
+            listBox2.SelectionMode = SelectionMode.MultiExtended;
             listBox2.Size = new Size(137, 349);
             listBox2.TabIndex = 1;
             // 
@@ -133,11 +136,41 @@
             btnDellAll.UseVisualStyleBackColor = true;
             btnDellAll.Click += btnDellAll_Click;
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(554, 363);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(206, 63);
+            textBox1.TabIndex = 8;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(554, 345);
+            label3.Name = "label3";
+            label3.Size = new Size(85, 15);
+            label3.TabIndex = 9;
+            label3.Text = "Общая сумма";
+            // 
+            // btnSumm
+            // 
+            btnSumm.Location = new Point(564, 77);
+            btnSumm.Name = "btnSumm";
+            btnSumm.Size = new Size(150, 23);
+            btnSumm.TabIndex = 10;
+            btnSumm.Text = "Посчитать стоимость";
+            btnSumm.UseVisualStyleBackColor = true;
+            btnSumm.Click += btnSumm_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnSumm);
+            Controls.Add(label3);
+            Controls.Add(textBox1);
             Controls.Add(btnDellAll);
             Controls.Add(btnDell);
             Controls.Add(btnAdd);
@@ -167,5 +200,8 @@
         private Button btnAdd;
         private Button btnDell;
         private Button btnDellAll;
+        private TextBox textBox1;
+        private Label label3;
+        private Button btnSumm;
     }
 }

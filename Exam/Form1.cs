@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Exam
 {
@@ -39,8 +40,8 @@ namespace Exam
         }
 
         private void btnDell_Click(object sender, EventArgs e)
-        {            
-            for(int i = listBox2.SelectedItems.Count - 1; i >= 0; i--)
+        {
+            for (int i = listBox2.SelectedItems.Count - 1; i >= 0; i--)
             {
                 listBox2.Items.Remove(listBox2.SelectedItems[i]);
             }
@@ -57,6 +58,25 @@ namespace Exam
             {
                 listBox2.Items.Add(listBox1.SelectedItems[i]);
             }
+        }
+
+        private void btnSumm_Click(object sender, EventArgs e)
+        {
+            if (listBox2 == null)
+                throw new ArgumentNullException(nameof(listBox2));
+            int sum = 0;
+
+            foreach (var item in listBox2.Items)
+            {               
+                string[] parts = item.ToString().Split(' ');
+                
+                if (parts.Length >= 2 && int.TryParse(parts.Last(), out int number))
+                {
+                    sum += number;
+                }
+            }
+
+            textBox1.Text = sum.ToString();
         }
     }
 }
