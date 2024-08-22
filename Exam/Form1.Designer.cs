@@ -161,7 +161,7 @@
             btnSumm.TabIndex = 10;
             btnSumm.Text = "Посчитать стоимость";
             btnSumm.UseVisualStyleBackColor = true;
-            btnSumm.Click += btnSumm_Click;
+            //btnSumm.Click += btnSumm_Click;
             // 
             // Form1
             // 
