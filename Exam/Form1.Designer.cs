@@ -40,7 +40,6 @@
             btnDellAll = new Button();
             textBox1 = new TextBox();
             label3 = new Label();
-            btnSumm = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -138,7 +137,7 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(554, 363);
+            textBox1.Location = new Point(546, 78);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(206, 63);
@@ -147,28 +146,17 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(554, 345);
+            label3.Location = new Point(546, 60);
             label3.Name = "label3";
-            label3.Size = new Size(85, 15);
+            label3.Size = new Size(122, 15);
             label3.TabIndex = 9;
-            label3.Text = "Общая сумма";
-            // 
-            // btnSumm
-            // 
-            btnSumm.Location = new Point(564, 77);
-            btnSumm.Name = "btnSumm";
-            btnSumm.Size = new Size(150, 23);
-            btnSumm.TabIndex = 10;
-            btnSumm.Text = "Посчитать стоимость";
-            btnSumm.UseVisualStyleBackColor = true;
-            //btnSumm.Click += btnSumm_Click;
+            label3.Text = "Общая сумма заказа";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(btnSumm);
             Controls.Add(label3);
             Controls.Add(textBox1);
             Controls.Add(btnDellAll);
@@ -202,6 +190,5 @@
         private Button btnDellAll;
         private TextBox textBox1;
         private Label label3;
-        private Button btnSumm;
     }
 }

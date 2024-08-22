@@ -84,7 +84,7 @@ namespace Exam
                 }
             }
             // Обновить текстовое поле суммой
-            textBox1.Text = sum.ToString();            
+            textBox1.Text = sum.ToString();
         }
 
         private void btnDell_Click(object sender, EventArgs e)
@@ -105,15 +105,15 @@ namespace Exam
 
                 if (itemDict.ContainsKey(itemName))
                 {
-                    int costPerItem = selectedItem.Cost / selectedItem.Count; 
+                    int costPerItem = selectedItem.Cost / selectedItem.Count;
 
                     if (itemDict[itemName].Count > 1)
-                    {                        
+                    {
                         itemDict[itemName].Count--;
-                        itemDict[itemName].Cost -= costPerItem; 
+                        itemDict[itemName].Cost -= costPerItem;
                     }
                     else
-                    {                        
+                    {
                         itemDict.Remove(itemName);
                     }
 
@@ -175,12 +175,12 @@ namespace Exam
                 string[] parts = itemName.Split(' ');
                 if (parts.Length >= 2 && int.TryParse(parts.Last(), out int cost))
                 {
-                    string name = string.Join(" ", parts.Take(parts.Length - 1)); 
+                    string name = string.Join(" ", parts.Take(parts.Length - 1));
 
                     if (itemDict.ContainsKey(name))
-                    {                        
+                    {
                         itemDict[name].Count++;
-                        itemDict[name].Cost += cost; 
+                        itemDict[name].Cost += cost;
                     }
                     else
                     {
@@ -199,15 +199,15 @@ namespace Exam
                 throw new ArgumentNullException(nameof(listBox2));
 
             int sum = 0;
-                        
+
             foreach (var item in listBox2.Items)
             {
                 if (item is ListItem listItem)
                 {
                     sum += listItem.Cost;
                 }
-            }           
+            }
             textBox1.Text = sum.ToString();
-        }       
+        }        
     }
 }
